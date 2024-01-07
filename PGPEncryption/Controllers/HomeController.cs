@@ -64,14 +64,10 @@ namespace PGPEncryption.Controllers
                 {
                     ViewData["NoEncryptionKey"] = true;
                     return View(model);
-                }
-                
+                }               
 
                 var encryptedMessageStreamX = new MemoryStream();
                 Encrypt(inputStream, encryptedMessageStreamX, "", publicKeys);
-
-                // var encryptedMessageStream = new MemoryStream();
-                // EncryptMessage(encryptedMessageStream, model.PGPInputToEncrypt, publicKeyForEncryption, true, true);
 
                 string PgpOutputMessage = System.Text.Encoding.UTF8.GetString(encryptedMessageStreamX.ToArray());
 
@@ -79,78 +75,13 @@ namespace PGPEncryption.Controllers
 
                 return View(model);
             }
-            else { 
-
+            else
+            { 
                 return RedirectToAction("Index");
             }
 
-            // return View();
         }
 
-
-        // From BouncyCaste unit testing
-
-        /*
-        public static Stream EncryptMessage(
-          Stream outputStream,
-          string inputMessage,
-          PgpPublicKey encKey,
-          bool armor,
-          bool withIntegrityCheck)
-        {
-            if (armor)
-            {
-                outputStream = new ArmoredOutputStream(outputStream);
-            }
-
-            try
-            {
-                // byte[] bytes = PgpExampleUtilities.CompressFile(fileName, CompressionAlgorithmTag.Zip);
-
-                // byte[] bytes = inputMessage.Cast<byte>().ToArray();
-
-                byte[] bytes = Encoding.ASCII.GetBytes(inputMessage);
-
-                
-                MemoryStream bOut = new MemoryStream();
-                PgpCompressedDataGenerator cPacket = new PgpCompressedDataGenerator(CompressionAlgorithmTag.Zip);
-                Stream os = cPacket.Open(bOut);
-                os.Write(bytes, 0, bytes.Length);
-
-                inputMessage = Encoding.ASCII.GetString(bytes);
-
-                PgpEncryptedDataGenerator encGen = new PgpEncryptedDataGenerator(
-                    SymmetricKeyAlgorithmTag.Cast5, withIntegrityCheck, new SecureRandom());
-                encGen.AddMethod(encKey);
-
-                Stream cOut = encGen.Open(outputStream, bytes.Length);
-
-                cOut.Write(bytes, 0, bytes.Length);
-                cOut.Close();
-
-                PgpLiteralDataGenerator dataGen = new PgpLiteralDataGenerator();
-
-
-                if (armor)
-                {
-                    outputStream.Close();
-                }
-            }
-            catch (PgpException e)
-            {
-                Console.Error.WriteLine(e);
-
-                Exception underlyingException = e.InnerException;
-                if (underlyingException != null)
-                {
-                    Console.Error.WriteLine(underlyingException.Message);
-                    Console.Error.WriteLine(underlyingException.StackTrace);
-                }
-            }
-
-            return outputStream;
-        }
-        */
 
         // Credit for Encrypt-function, https://github.com/bertjohnson/OpaqueMail
 
