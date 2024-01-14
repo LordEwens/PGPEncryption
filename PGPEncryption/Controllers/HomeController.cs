@@ -102,7 +102,10 @@ namespace PGPEncryption.Controllers
             PgpEncryptedDataGenerator encryptedDataGenerator = new PgpEncryptedDataGenerator(symmetricKeyAlgorithmTag, true, new SecureRandom());
             foreach (PgpPublicKey publicKey in recipientPublicKeys)
             {
-                encryptedDataGenerator.AddMethod(publicKey);
+                if (publicKey.IsEncryptionKey)
+                {
+                    encryptedDataGenerator.AddMethod(publicKey);
+                }
             }
 
             // Handle optional ASCII armor.
