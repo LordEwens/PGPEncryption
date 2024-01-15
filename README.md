@@ -5,6 +5,8 @@ This tool can encrypt PGP messages by using PGP Public Key Blocks. In case of an
 
 Project Target Framework: .NET 6.0
 
+Demo: https://pgp-encrypt.ewens.se/
+
 Frameworks: Microsoft.AspNetCore.App, Microsoft.NETCore.App
 
 Packages: BouncyCastle.OpenPGP (2.0.0.1) https://github.com/nano-byte/bc-csharp
